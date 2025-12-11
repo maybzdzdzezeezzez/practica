@@ -1,0 +1,38 @@
+CREATE DATABASE IF NOT EXISTS production_system;
+
+USE production_system;
+
+CREATE TABLE product_type (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    coefficient DOUBLE NOT NULL
+);
+
+CREATE TABLE material_type (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE material (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    material_type_id INT NOT NULL,
+    name VARCHAR(150) NOT NULL,
+    unit VARCHAR(20) NOT NULL,
+    cost DOUBLE NOT NULL,
+    defect_percent DOUBLE NOT NULL
+);
+
+CREATE TABLE product (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    article VARCHAR(50) NOT NULL,
+    product_type_id INT NOT NULL,
+    name VARCHAR(200) NOT NULL,
+    min_partner_price DOUBLE NOT NULL,
+    roll_width DOUBLE NOT NULL
+);
+
+CREATE TABLE product_material (
+    product_id INT NOT NULL,
+    material_id INT NOT NULL,
+    quantity_per_product DOUBLE NOT NULL,
+);
