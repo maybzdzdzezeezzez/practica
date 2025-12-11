@@ -1,38 +1,39 @@
-CREATE DATABASE IF NOT EXISTS production_system;
+CREATE DATABASE production_system;
 
 USE production_system;
 
 CREATE TABLE product_type (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    coefficient DOUBLE NOT NULL
+    Id INT IDENTITY PRIMARY KEY,
+    Name NVARCHAR(100) NOT NULL,
+    Coefficient FLOAT NOT NULL
 );
 
 CREATE TABLE material_type (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
+    Id INT IDENTITY PRIMARY KEY,
+    Name NVARCHAR(100) NOT NULL
 );
 
 CREATE TABLE material (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    material_type_id INT NOT NULL,
-    name VARCHAR(150) NOT NULL,
-    unit VARCHAR(20) NOT NULL,
-    cost DOUBLE NOT NULL,
-    defect_percent DOUBLE NOT NULL
+    Id INT IDENTITY PRIMARY KEY,
+    MaterialTypeId INT FOREIGN KEY REFERENCES material_type(Id),
+    Name NVARCHAR(150) NOT NULL,
+    Unit NVARCHAR(20) NOT NULL,
+    Cost DECIMAL(10,2) NOT NULL,
+    DefectPercent FLOAT NOT NULL
 );
 
 CREATE TABLE product (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    article VARCHAR(50) NOT NULL,
-    product_type_id INT NOT NULL,
-    name VARCHAR(200) NOT NULL,
-    min_partner_price DOUBLE NOT NULL,
-    roll_width DOUBLE NOT NULL
+    Id INT IDENTITY PRIMARY KEY,
+    Article NVARCHAR(50) NOT NULL,
+    ProductTypeId INT FOREIGN KEY REFERENCES product_type(Id),
+    Name NVARCHAR(200) NOT NULL,
+    MinPartnerPrice DECIMAL(10,2) NOT NULL,
+    RollWidth FLOAT NOT NULL
 );
 
 CREATE TABLE product_material (
-    product_id INT NOT NULL,
-    material_id INT NOT NULL,
-    quantity_per_product DOUBLE NOT NULL,
+    ProductId INT FOREIGN KEY REFERENCES product(Id),
+    MaterialId INT FOREIGN KEY REFERENCES material(Id),
+    QuantityPerProduct FLOAT NOT NULL,
+    PRIMARY KEY (ProductId, MaterialId)
 );
