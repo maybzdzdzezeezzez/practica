@@ -1,0 +1,39 @@
+CREATE DATABASE production_system;
+
+USE production_system;
+
+CREATE TABLE product_type (
+    Id INT IDENTITY PRIMARY KEY,
+    Name NVARCHAR(100) NOT NULL,
+    Coefficient FLOAT NOT NULL
+);
+
+CREATE TABLE material_type (
+    Id INT IDENTITY PRIMARY KEY,
+    Name NVARCHAR(100) NOT NULL
+);
+
+CREATE TABLE material (
+    Id INT IDENTITY PRIMARY KEY,
+    MaterialTypeId INT FOREIGN KEY REFERENCES material_type(Id),
+    Name NVARCHAR(150) NOT NULL,
+    Unit NVARCHAR(20) NOT NULL,
+    Cost DECIMAL(10,2) NOT NULL,
+    DefectPercent FLOAT NOT NULL
+);
+
+CREATE TABLE product (
+    Id INT IDENTITY PRIMARY KEY,
+    Article NVARCHAR(50) NOT NULL,
+    ProductTypeId INT FOREIGN KEY REFERENCES product_type(Id),
+    Name NVARCHAR(200) NOT NULL,
+    MinPartnerPrice DECIMAL(10,2) NOT NULL,
+    RollWidth FLOAT NOT NULL
+);
+
+CREATE TABLE product_material (
+    ProductId INT FOREIGN KEY REFERENCES product(Id),
+    MaterialId INT FOREIGN KEY REFERENCES material(Id),
+    QuantityPerProduct FLOAT NOT NULL,
+    PRIMARY KEY (ProductId, MaterialId)
+);
